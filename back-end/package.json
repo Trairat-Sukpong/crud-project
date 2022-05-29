@@ -15,6 +15,9 @@
     "moment": "^2.29.3",
     "mongodb": "^4.6.0",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "seneca": "^3.28.0",
+    "seneca-web": "^2.2.1",
+    "seneca-web-adapter-express": "^1.2.1"
   }
 }
