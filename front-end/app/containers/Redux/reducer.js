@@ -1,6 +1,6 @@
 import { UPDATA_ITEM } from './actionType'
 
-const initialState = {
+export const initialState = {
     data: [{
         _id: "LOADING...",
         itemName: "LOADING...",

@@ -4,7 +4,7 @@ import { REQ_GET_ITEM, REQ_CREATE_ITEM, REQ_EDIT_ITEM, REQ_DELETE_ITEM } from '.
 import { actionUpdata } from './actions';
 import { repoLoadingError, loadRepos } from 'containers/App/actions';
 
-import { getdata, postdata } from '../ItemRedux/api/fetch.item';
+import { getdata, postdata } from './api/fetch.item';
 
 export function* getIteam() {
 

@@ -7,7 +7,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { REQ_DELETE_ITEM } from '../ItemRedux/actionType';
+import { REQ_DELETE_ITEM } from '../Redux/actionType';
 import { Modal, Input, Space, message } from 'antd';
 import 'antd/dist/antd.css';
 

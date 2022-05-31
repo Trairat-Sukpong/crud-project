@@ -12,10 +12,10 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux'
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { REQ_GET_ITEM } from '../ItemRedux/actionType'
+import { REQ_GET_ITEM } from '../Redux/actionType'
 
-import reducer from '../ItemRedux/reducer';
-import saga from '../ItemRedux/saga';
+import reducer from '../Redux/reducer';
+import saga from '../Redux/saga';
 import H1 from 'components/H1';
 
 import messages from './messages';
@@ -23,6 +23,7 @@ import Create from './create.modal';
 import TableItem from './item.table';
 
 import 'antd/dist/antd.css';
+
 
 const key = 'itemStore';
 

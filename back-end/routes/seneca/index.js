@@ -15,7 +15,7 @@ const seneca = require('seneca')();
 
 // seneca.use(SenecaWeb, senecaWebConfig)
 
-router.get('/item/get', function (req, res, next) {
+router.get('/item/get', function a (req, res, next) {
   seneca.client().act({ service: "get" }, (err, result) => {
     if (err) return console.error(err)
     // createDBCollection();

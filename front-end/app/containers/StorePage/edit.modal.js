@@ -7,7 +7,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Modal, Input, InputNumber, Space, message } from 'antd';
-import { REQ_EDIT_ITEM } from '../ItemRedux/actionType';
+import { REQ_EDIT_ITEM } from '../Redux/actionType';
 import { useDispatch } from 'react-redux';
 import { UploadOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';

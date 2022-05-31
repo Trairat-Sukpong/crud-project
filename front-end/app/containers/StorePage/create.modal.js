@@ -8,7 +8,7 @@
 import React, { useState } from 'react';
 import { Modal, Input, InputNumber, Space } from 'antd';
 import { useDispatch } from 'react-redux';
-import { REQ_CREATE_ITEM } from '../ItemRedux/actionType';
+import { REQ_CREATE_ITEM } from '../Redux/actionType';
 import { message } from 'antd';
 import 'antd/dist/antd.css';
 

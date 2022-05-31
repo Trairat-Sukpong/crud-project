@@ -3,14 +3,15 @@
  */
 
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
+import { initialState } from '../Redux/reducer';
 
-const selectHome = state => state.home || initialState;
+const selectItem = state => (state.itemStore || initialState);
 
-const makeSelectUsername = () =>
+// console.log(selectStore);
+const makeSelectItem = () =>
   createSelector(
-    selectHome,
-    homeState => homeState.username,
+    selectItem,
+    itemState => itemState,
   );
 
-export { selectHome, makeSelectUsername };
+export { selectItem, makeSelectItem };

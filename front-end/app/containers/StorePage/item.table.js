@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect, memo } from 'react';
 import Edit from './edit.modal';
 import Delete from './delete.modal'
 import { Table, Space } from 'antd';
-import { useSelector } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
+import { compose } from 'redux';
 
-function TableItem() {
+import { makeSelectItem } from './selectors';
+import { createStructuredSelector } from 'reselect';
 
-    const itemStore = useSelector(({ itemStore }) => itemStore)
+function TableItem({itemStore}) {
+
+    // const itemStore = useSelector(({ itemStore }) => itemStore)
+
+    // console.log(itemStore);
 
     const columns = [
         {
@@ -76,7 +82,7 @@ function TableItem() {
             return
         }
     }
-    
+
     return (
         <Table
             columns={columns}
@@ -87,4 +93,15 @@ function TableItem() {
     )
 }
 
-export default TableItem
+const mapStateToProps = createStructuredSelector({
+    itemStore: makeSelectItem()
+});
+
+const withConnect = connect(
+    mapStateToProps,
+);
+
+export default compose(
+    withConnect,
+    memo,
+)(TableItem);
