@@ -21,7 +21,7 @@ module.exports = function api(options) {
         prefix: '/api',
         pin: 'role:api,path:*',
         map: {
-          item: { POST: true, suffix: '/:operation' }
+          item: { GET: true, suffix: '/:operation' }
         }
       }
     }, respond)

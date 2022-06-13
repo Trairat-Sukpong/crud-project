@@ -12,10 +12,11 @@
 // seneca.listen();
 
 
-require( 'seneca' )()
+require('seneca')()
 
-  .use( 'math' )
+  .use('getItem')
+  .use('createItem')
 
   // listen for role:math messages
   // IMPORTANT: must match client
-  .listen( { type:'tcp', pin:'role:math' } )
+  .listen({ type: 'tcp', pin: 'role:math' })
