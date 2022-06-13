@@ -16,6 +16,7 @@ export function* getIteam() {
   try {
     yield put(loadRepos())
     const response = yield call(getdata, input);
+    // console.log("getIteam")
     yield put(actionUpdata(response));
   } catch (err) {
     yield put(repoLoadingError(err));

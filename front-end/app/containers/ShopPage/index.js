@@ -37,22 +37,22 @@ export default function ShopPage() {
   const Adjustdata = (input) => {
     if (input !== undefined) {
       if (input.data.length > 0) {
-        return input.data.map((key,data) => {
+        return input.data.map((data,key) => {
           return (
-            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 p-2">
+            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 p-2" key={key}>
               <div className="card rounded-3 border-1">
                 <img
-                  src={key.itemImage}
+                  src={data.itemImage}
                   alt=""
                   className="rounded-3"
                   width={"100%"}
                   height={"250px"}
                 />
                 <div className="card-body">
-                  <h4 className="card-title text-center">${key.itemPrice}</h4>
+                  <h4 className="card-title text-center">${data.itemPrice}</h4>
                   <div className=" d-flex flex-row justify-content-between">
-                    <p className="card-text">{key.itemName}</p>
-                    <p className="card-text">{key.itemAmount} set</p>
+                    <p className="card-text">{data.itemName}</p>
+                    <p className="card-text">{data.itemAmount} set</p>
                   </div>
                   <button type="button" className="btn w-100 btn-outline-success">
                     Add Order

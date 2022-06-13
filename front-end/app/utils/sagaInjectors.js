@@ -52,6 +52,7 @@ export function injectSagaFactory(store, isValid) {
       (hasSaga && mode !== DAEMON && mode !== ONCE_TILL_UNMOUNT)
     ) {
       /* eslint-disable no-param-reassign */
+      // console.log(mode);
       store.injectedSagas[key] = {
         ...newDescriptor,
         task: store.runSaga(saga, args),

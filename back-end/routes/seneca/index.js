@@ -5,15 +5,6 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/"
 const seneca = require('seneca')();
-// var SenecaWeb = require('seneca-web')
-
-// var senecaWebConfig = {
-//     context: context,
-//     adapter: require('seneca-web-adapter-express'),
-//     options: { parseBody: false } // so we can use body-parser
-// }
-
-// seneca.use(SenecaWeb, senecaWebConfig)
 
 router.get('/item/get', function a (req, res, next) {
   seneca.client().act({ service: "get" }, (err, result) => {
