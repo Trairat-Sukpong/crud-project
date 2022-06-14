@@ -6,7 +6,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/"
 const seneca = require('seneca')();
 
-router.get('/item/get', function a (req, res, next) {
+router.get('/item/get', function (req, res, next) {
   seneca.client().act({ service: "get" }, (err, result) => {
     if (err) return console.error(err)
     // createDBCollection();

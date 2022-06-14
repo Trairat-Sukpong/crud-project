@@ -7,7 +7,7 @@ var url = "mongodb://localhost:27017/"
 
 module.exports = function math(options) {
 
-  this.add('role:item,cmd:get', function sum(msg, respond) {
+  this.add('role:update,cmd:delete', function sum(msg, respond) {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       var dbo = db.db("testMongo");

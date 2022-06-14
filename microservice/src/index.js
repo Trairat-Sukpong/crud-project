@@ -5,18 +5,23 @@
 // };
 // seneca.add('service:hello', hello).listen();
 
-// seneca.add('service:get');
-// seneca.add('service:create');
-// seneca.add('service:edit');
-// seneca.add('service:delete');
-// seneca.listen();
-
-
 require('seneca')()
 
-  .use('getItem')
-  .use('createItem')
+    .add('service:get')
+    .add('service:create')
+    .add('service:edit')
+    .add('service:delete')
+    .listen()
 
-  // listen for role:math messages
-  // IMPORTANT: must match client
-  .listen({ type: 'tcp', pin: 'role:math' })
+
+// require('seneca')()
+
+//   .use('getItem')
+//   .use('createItem')
+//   .use('editItem')
+//   .use('deleteItem')
+
+//   // listen for role:math messages
+//   // IMPORTANT: must match client
+//   .listen({ type: 'tcp'})
+  

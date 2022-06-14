@@ -18,7 +18,8 @@ Express()
 require( 'seneca' )()
       .use( SenecaWeb, senecaWebConfig )
       .use( 'api' )
-      .client( { type:'tcp', pin:'role:math' } )
+      .client( { type:'tcp', pin:'role:item' } )
+      .client( { type:'tcp', pin:'role:update' } )
 
 
 
