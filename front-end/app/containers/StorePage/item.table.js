@@ -73,7 +73,9 @@ function TableItem({itemStore}) {
             if (input.data.length > 0) {
                 for (let index = 0; index < input.data.length; index++) {
                     input.data[index]["key"] = index + 1
+                    // input.data[index]["itemPrice"] = input.data[index]["itemPrice"] + 20
                 }
+                console.log(input.data);
                 return input.data
             } else {
 

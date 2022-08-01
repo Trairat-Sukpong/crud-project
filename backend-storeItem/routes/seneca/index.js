@@ -4,11 +4,11 @@ var moment = require('moment'); // require
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/"
-const seneca = require('seneca')();
+// const seneca = require('seneca')();
 
 router.get('/item/get', function (req, res, next) {
-  seneca.client().act({ service: "get" }, (err, result) => {
-    if (err) return console.error(err)
+  // seneca.client().act({ service: "get" }, (err, result) => {
+    // if (err) return console.error(err)
     // createDBCollection();
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -19,14 +19,14 @@ router.get('/item/get', function (req, res, next) {
         db.close();
       });
     });
-  });
+  // });
 
 });
 
 
 router.post('/item/create', function (req, res, next) {
-  seneca.client().act({ service: "create" }, (err, result) => {
-    if (err) return console.error(err)
+  // seneca.client().act({ service: "create" }, (err, result) => {
+  //   if (err) return console.error(err)
     // console.log(req.body);
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -44,14 +44,14 @@ router.post('/item/create', function (req, res, next) {
         });
       });
     });
-  });
+  // });
 
 });
 
 
 router.post('/item/edit', function (req, res, next) {
-  seneca.client().act({ service: "edit" }, (err, result) => {
-    if (err) return console.error(err)
+  // seneca.client().act({ service: "edit" }, (err, result) => {
+  //   if (err) return console.error(err)
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       var dbo = db.db("testMongo");
@@ -71,14 +71,14 @@ router.post('/item/edit', function (req, res, next) {
         });
       });
     });
-  });
+  // });
 
 });
 
 
 router.post('/item/delete', function (req, res, next) {
-  seneca.client().act({ service: "delete" }, (err, result) => {
-    if (err) return console.error(err)
+  // seneca.client().act({ service: "delete" }, (err, result) => {
+  //   if (err) return console.error(err)
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       var dbo = db.db("testMongo");
@@ -96,7 +96,7 @@ router.post('/item/delete', function (req, res, next) {
         });
       });
     });
-  });
+  // });
 
 });
 

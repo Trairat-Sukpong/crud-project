@@ -1,6 +1,7 @@
 import axios from 'axios';
+import * as env from '../../../env.json'
 
-const url = "http://localhost:8000"
+const url = env.host_api_item
 
 export const getdata = async (input) => {
 

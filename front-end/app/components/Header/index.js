@@ -20,11 +20,17 @@ function Header() {
           <HeaderLink to="/features">
             <FormattedMessage {...messages.features} />
           </HeaderLink>
-          <HeaderLink to="/shop">
+           <HeaderLink to="/shop">
             <FormattedMessage {...messages.shop} />
           </HeaderLink>
           <HeaderLink to="/store">
             <FormattedMessage {...messages.store} />
+          </HeaderLink>
+           <HeaderLink to="/signin">
+            <FormattedMessage {...messages.signin} />
+          </HeaderLink>
+          <HeaderLink to="/signup">
+            <FormattedMessage {...messages.signup} />
           </HeaderLink>
         </NavBar>
 

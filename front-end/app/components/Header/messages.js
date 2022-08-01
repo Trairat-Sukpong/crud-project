@@ -24,4 +24,12 @@ export default defineMessages({
     id: `${scope}.store`,
     defaultMessage: 'Store',
   },
+  signin: {
+    id: `${scope}.signin`,
+    defaultMessage: 'Signin',
+  },
+  signup: {
+    id: `${scope}.signup`,
+    defaultMessage: 'Signup',
+  },
 });

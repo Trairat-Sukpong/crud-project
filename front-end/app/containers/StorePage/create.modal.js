@@ -1,5 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-plusplus */
 /*
  * ShopPage
  *
@@ -39,7 +37,7 @@ export default function Create() {
       itemAmount
     }
     if (itemName !== "" && itemImage !== "") {
-      action(REQ_CREATE_ITEM, data)
+      dispatch({ type: REQ_CREATE_ITEM, payload: data })
       setItemName('')
       setItemImage('')
       setItemPrice(0)
@@ -49,7 +47,7 @@ export default function Create() {
       message.error('Error Please enter data ')
     }
 
-    
+
   };
 
   const handleCancel = () => {

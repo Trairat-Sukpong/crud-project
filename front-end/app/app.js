@@ -33,6 +33,7 @@ import configureStore from './configureStore';
 import { translationMessages } from './i18n';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)

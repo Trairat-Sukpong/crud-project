@@ -1,27 +1,44 @@
-// const seneca = require('seneca')();
+'use strict'
 
-// let hello = (msg, reply) => {
-//     reply(null, {answer: ('Hello ' + msg.name)})
-// };
-// seneca.add('service:hello', hello).listen();
+var Seneca = require('seneca')
+var Express = require('express')
+var Web = require('seneca-web')
 
-require('seneca')()
+var Routes = [{
+    prefix: '/api',
+    pin: 'role:api,cmd:*',
+    map: {
+        store_item: {
+            GET: true,
+            POST: true,
+        },
+        auth: {
+            GET: true,
+            POST: true,
+        }
+    }
+}]
+var seneca = Seneca()
 
-    .add('service:get')
-    .add('service:create')
-    .add('service:edit')
-    .add('service:delete')
-    .listen()
+var config = {
+    routes: Routes,
+    adapter: require('seneca-web-adapter-express'),
+    context: Express()
+}
 
+seneca.client()
+    .use(Web, config)
+    .ready(() => {
+        var server = seneca.export('web/context')()
+        server.listen('4000', () => {
+            console.log('server started on: 4000')
+        })
+    })
 
-// require('seneca')()
+seneca.add({ role: 'api', cmd: 'store_item' }, function (args, done) {
+    done(null, { response: "storeItem" });
+});
 
-//   .use('getItem')
-//   .use('createItem')
-//   .use('editItem')
-//   .use('deleteItem')
-
-//   // listen for role:math messages
-//   // IMPORTANT: must match client
-//   .listen({ type: 'tcp'})
-  
+seneca.add({ role: 'api', cmd: 'auth' }, function (args, done) {
+    done(null, { response: "auth" });
+});

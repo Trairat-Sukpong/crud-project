@@ -4,14 +4,15 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useEffect, memo } from 'react';
+import React, { useEffect, memo, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
+import { Redirect } from 'react-router-dom';
+import axios from 'axios'
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 
@@ -33,10 +34,15 @@ import { loadRepos } from '../App/actions';
 import { changeUsername } from './actions';
 
 import { makeSelectUsername } from './selectors';
+import { refresh_token } from '../../refreshToken';
 
 import reducer from './reducer';
 import saga from './saga';
 
+import { AuthContext } from '../App/auth';
+import * as env from '../../env.json';
+
+const token = localStorage.getItem("token")
 const key = 'home';
 
 export function HomePage({
@@ -47,12 +53,19 @@ export function HomePage({
   onSubmitForm,
   onChangeUsername,
 }) {
+
+  const [data, setData] = useState("")
+
+  const [currentUser, setCurrentUser] = useContext(AuthContext);
+
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
     // When initial state username is not null, submit the form to load repos
     if (username && username.trim().length > 0) onSubmitForm();
+
+    getProfile()
   }, []);
 
   const reposListProps = {
@@ -60,6 +73,46 @@ export function HomePage({
     error,
     repos,
   };
+
+  const onLogout = async () => {
+    await axios({
+      method: "POST",
+      withCredentials: true,
+      url: env.host_api_auth + "/auth/logout",
+    })
+      .then(function (response) {
+        console.log(response);
+        // window.location.reload();
+        setCurrentUser(false);
+        localStorage.removeItem('token')
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const getProfile = async () => {
+    await axios({
+      method: "POST",
+      withCredentials: true,
+      url: env.host_api_auth + "/profile/user",
+      headers: {
+        "x-access-token": token
+      }
+    })
+      .then(function (response) {
+        setData(response.data)
+      })
+      .catch(
+        function (error) {
+          // console.log(error.response);
+
+          if (error.response.status == 401) {
+            refresh_token();
+          }
+
+        });
+  }
 
   return (
     <article>
@@ -71,35 +124,8 @@ export function HomePage({
         />
       </Helmet>
       <div className=" text-center">
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
+        <div>{JSON.stringify(data)}</div>
+        <button type="button" className="btn btn-primary" onClick={onLogout}>Logout</button>
       </div>
     </article>
   );
