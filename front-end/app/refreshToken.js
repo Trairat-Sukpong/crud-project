@@ -5,7 +5,7 @@ export const refresh_token = async () => {
     await axios({
         method: "POST",
         withCredentials: true,
-        url: env.host_api_auth + "/auth/refresh_token",
+        url: env.host_api + "/api/auth/refresh_token",
     })
         .then(function (response) {
             if (response.data.status == "ok") {

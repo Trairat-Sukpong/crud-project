@@ -78,7 +78,7 @@ export function HomePage({
     await axios({
       method: "POST",
       withCredentials: true,
-      url: env.host_api_auth + "/auth/logout",
+      url: env.host_api + "/api/auth/logout",
     })
       .then(function (response) {
         console.log(response);
@@ -95,7 +95,7 @@ export function HomePage({
     await axios({
       method: "POST",
       withCredentials: true,
-      url: env.host_api_auth + "/profile/user",
+      url: env.host_api + "/api/profile/user",
       headers: {
         "x-access-token": token
       }

@@ -14,12 +14,12 @@ export function* getIteam() {
   }
 
   try {
-    yield put(loadRepos())
-    const response = yield call(getdata, input);
+    // yield put(loadRepos())
+    const response = yield call(postdata, input);
     // console.log("getIteam")
     yield put(actionUpdata(response));
   } catch (err) {
-    yield put(repoLoadingError(err));
+    //yield put(repoLoadingError(err));
   }
 
 }
@@ -32,11 +32,11 @@ export function* createItem(req) {
   }
 
   try {
-    yield put(loadRepos())
+    // yield put(loadRepos())
     const response = yield call(postdata,input);
     yield put(actionUpdata(response));
   } catch (err) {
-    yield put(repoLoadingError(err));
+    //yield put(repoLoadingError(err));
   }
 
 }
@@ -45,15 +45,15 @@ export function* editItem(req) {
 
   const input = {
     data: req.payload,
-    path: `/api/item/edit`
+    path: `/api/item/update`
   }
 
   try {
-    yield put(loadRepos())
+    // yield put(loadRepos())
     const response = yield call(postdata,input);
     yield put(actionUpdata(response));
   } catch (err) {
-    yield put(repoLoadingError(err));
+    //yield put(repoLoadingError(err));
   }
 
 }
@@ -66,11 +66,11 @@ export function* deleteItem(req) {
   }
 
   try {
-    yield put(loadRepos())
+    // yield put(loadRepos())
     const response = yield call(postdata,input);
     yield put(actionUpdata(response));
   } catch (err) {
-    yield put(repoLoadingError(err));
+    // //yield put(repoLoadingError(err));
   }
 
 }

@@ -25,7 +25,7 @@ function index() {
           password: password,
         },
         withCredentials: true,
-        url: env.host_api_auth + "/auth/login",
+        url: env.host_api + "/api/auth/login",
       })
         .then(function (response) {
           console.log(response.data.status);

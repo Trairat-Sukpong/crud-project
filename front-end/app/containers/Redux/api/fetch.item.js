@@ -1,7 +1,8 @@
 import axios from 'axios';
 import * as env from '../../../env.json'
 
-const url = env.host_api_item
+const url = env.host_api
+const token = localStorage.getItem("token")
 
 export const getdata = async (input) => {
 
@@ -22,7 +23,19 @@ export const getdata = async (input) => {
 export const postdata = async (input) => {
     // console.log(input);
     try {
-        const response = await axios.post(url + input.path, { data: input.data });
+        const response = await axios.post(
+            url + input.path,
+            {
+                data: input.data
+            },
+            {
+                headers: {
+                    "x-access-token": token
+                },
+                withCredentials: true
+            }
+        );
+
         const data = await response.data
         return data;
     } catch (e) {

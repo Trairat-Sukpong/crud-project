@@ -42,23 +42,24 @@ router.post("/login", (req, res, next) => {
     if (err) throw err;
     if (!user) res.json({ status: "error", msg: "No User Exists" });
     else {
+   
       req.logIn(user, (err) => {
         if (err) throw err;
         const token = jwt.sign(
           { user_id: user._id },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "2h",
+            expiresIn: "30s",
           }
         );
 
         // save user token
         req.session.passport.username = user.username;
         req.session.passport.token = token;
-       
+
         // console.log(req.session);
         res.json({ status: "ok", msg: "Successfully Authenticated", token: token });
-
+        console.log(req.logIn);
         // console.log(req.session);
       });
     }
@@ -84,7 +85,7 @@ router.post("/refresh_token", (req, res, next) => {
       { user_id: req.session.passport.user },
       process.env.TOKEN_KEY,
       {
-        expiresIn: "2h",
+        expiresIn: "30s",
       }
     );
 
@@ -102,10 +103,10 @@ router.post("/is_auth", (req, res, next) => {
 
   // console.log(req.session.passport);
   let session = true
-  if (req.session.passport === undefined){
-     session = false
-     req.session.destroy(null);
-     res.clearCookie("connect.sid", { path: '/' });
+  if (req.session.passport === undefined) {
+    session = false
+    req.session.destroy(null);
+    res.clearCookie("connect.sid", { path: '/' });
   }
 
 

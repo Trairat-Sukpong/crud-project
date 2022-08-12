@@ -8,17 +8,18 @@ var url = "mongodb://localhost:27017/"
 
 router.get('/item/get', function (req, res, next) {
   // seneca.client().act({ service: "get" }, (err, result) => {
-    // if (err) return console.error(err)
-    // createDBCollection();
-    MongoClient.connect(url, function (err, db) {
+  // if (err) return console.error(err)
+  // createDBCollection();
+  console.log(req)
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("testMongo");
+    dbo.collection("itemStore").find({}).toArray(function (err, data) {
       if (err) throw err;
-      var dbo = db.db("testMongo");
-      dbo.collection("itemStore").find({}).toArray(function (err, data) {
-        if (err) throw err;
-        res.json({ data });
-        db.close();
-      });
+      res.json({ data });
+      db.close();
     });
+  });
   // });
 
 });
@@ -27,23 +28,23 @@ router.get('/item/get', function (req, res, next) {
 router.post('/item/create', function (req, res, next) {
   // seneca.client().act({ service: "create" }, (err, result) => {
   //   if (err) return console.error(err)
-    // console.log(req.body);
-    MongoClient.connect(url, function (err, db) {
+  // console.log(req.body);
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("testMongo");
+    var myobj = req.body.data;
+    myobj.create_at = moment().format("YYYY-MM-DD HH:mm:ss");
+    dbo.collection("itemStore").insertOne(myobj, function (err, data) {
       if (err) throw err;
-      var dbo = db.db("testMongo");
-      var myobj = req.body.data;
-      myobj.create_at = moment().format("YYYY-MM-DD HH:mm:ss");
-      dbo.collection("itemStore").insertOne(myobj, function (err, data) {
+      console.log("create success");
+      // res.json({ data });
+      dbo.collection("itemStore").find({}).toArray(function (err, data) {
         if (err) throw err;
-        console.log("create success");
-        // res.json({ data });
-        dbo.collection("itemStore").find({}).toArray(function (err, data) {
-          if (err) throw err;
-          res.json({ data });
-          db.close();
-        });
+        res.json({ data });
+        db.close();
       });
     });
+  });
   // });
 
 });
@@ -52,25 +53,25 @@ router.post('/item/create', function (req, res, next) {
 router.post('/item/edit', function (req, res, next) {
   // seneca.client().act({ service: "edit" }, (err, result) => {
   //   if (err) return console.error(err)
-    MongoClient.connect(url, function (err, db) {
-      if (err) throw err;
-      var dbo = db.db("testMongo");
-      var newdata = req.body.data;
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("testMongo");
+    var newdata = req.body.data;
 
-      var myquery = { _id: new ObjectID(newdata._id) };
-      delete newdata._id
-      var newvalues = { $set: newdata };
-      // console.log(myquery);
-      dbo.collection("itemStore").updateMany(myquery, newvalues, function (err, data) {
+    var myquery = { _id: new ObjectID(newdata._id) };
+    delete newdata._id
+    var newvalues = { $set: newdata };
+    // console.log(myquery);
+    dbo.collection("itemStore").updateMany(myquery, newvalues, function (err, data) {
+      if (err) throw err;
+      console.log("edit success");
+      dbo.collection("itemStore").find({}).toArray(function (err, data) {
         if (err) throw err;
-        console.log("edit success");
-        dbo.collection("itemStore").find({}).toArray(function (err, data) {
-          if (err) throw err;
-          res.json({ data });
-          db.close();
-        });
+        res.json({ data });
+        db.close();
       });
     });
+  });
   // });
 
 });
@@ -79,23 +80,23 @@ router.post('/item/edit', function (req, res, next) {
 router.post('/item/delete', function (req, res, next) {
   // seneca.client().act({ service: "delete" }, (err, result) => {
   //   if (err) return console.error(err)
-    MongoClient.connect(url, function (err, db) {
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("testMongo");
+    console.log(req.body.data);
+    var myquery = {
+      _id: new ObjectID(req.body.data._id)
+    };
+    dbo.collection("itemStore").deleteOne(myquery, function (err, obj) {
       if (err) throw err;
-      var dbo = db.db("testMongo");
-      console.log(req.body.data);
-      var myquery = {
-        _id: new ObjectID(req.body.data._id)
-      };
-      dbo.collection("itemStore").deleteOne(myquery, function (err, obj) {
+      console.log(" document(s) deleted");
+      dbo.collection("itemStore").find({}).toArray(function (err, data) {
         if (err) throw err;
-        console.log(" document(s) deleted");
-        dbo.collection("itemStore").find({}).toArray(function (err, data) {
-          if (err) throw err;
-          res.json({ data });
-          db.close();
-        });
+        res.json({ data });
+        db.close();
       });
     });
+  });
   // });
 
 });

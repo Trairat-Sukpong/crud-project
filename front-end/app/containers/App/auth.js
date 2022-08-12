@@ -12,21 +12,21 @@ export const AuthProvider = ({ children }) => {
         await axios({
             method: "POST",
             withCredentials: true,
-            url: env.host_api_auth + "/auth/is_auth",
+            url: env.host_api + "/api/auth/is_auth",
         })
-            .then(function (response) {
+            .then(async function (response) {
 
-                setCurrentUser(response.data.session);
-                setLoading(false);
+                await setCurrentUser(response.data.session);
+                await setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
 
-    
+
     useEffect(() => {
-        
+
         Is_auth()
 
     }, [])
