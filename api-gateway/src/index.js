@@ -69,19 +69,6 @@ require("dotenv").config();
 require('../database/db');
 require("../config/passportConfig")(passport);
 
-var senecaWebConfig = {
-      context: context,
-      adapter: require('seneca-web-adapter-express'),
-      options: {
-            parseBody: false,
-            includeRequest: true,
-            includeResponse: true
-      },
-      middleware: {
-            'jwt_middleware': jwtMiddleware,
-      },
-}
-
 Express()
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({ extended: true }))
@@ -105,6 +92,20 @@ Express()
       .listen(4000)
 
 
+var senecaWebConfig = {
+      context: context,
+      adapter: require('seneca-web-adapter-express'),
+      options: {
+            parseBody: false,
+            includeRequest: true,
+            includeResponse: true
+      },
+      middleware: {
+            'jwt_middleware': jwtMiddleware,
+      },
+}
+
+
 require('seneca')({
       timeout: 5000,
       debug: {
@@ -112,8 +113,9 @@ require('seneca')({
       }
 })
       .use(SenecaWeb, senecaWebConfig)
-      .use('api-profile')
-      .use('api-item')
+      .use('./service/api-profile')
+      .use('./service/api-item')
       .client({ type: 'tcp', port: 8081, pin: 'role:profile' })
       .client({ type: 'tcp', port: 8082, pin: 'role:item' })
+      // .client({ type: 'tcp', port: 8083, pin: 'role:auth' })
 

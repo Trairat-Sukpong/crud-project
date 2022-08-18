@@ -1,71 +1,66 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const passport = require('passport');
-const logger = require('morgan');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const app = express();
 
-require("dotenv").config();
-require('./database/db');
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin:  [process.env.HOST], // <-- location of the react app were connecting to
-    credentials: true,
+module.exports = function math(options) {
+
+  const Express = require('express');
+  const cookieParser = require('cookie-parser');
+  const session = require('express-session');
+  const passport = require('passport');
+  const bodyParser = require('body-parser');
+  const bcrypt = require('bcrypt');
+  const jwt = require("jsonwebtoken");
+
+  const User = require('../../models/User');
+
+  require("dotenv").config();
+  require('./database/db');
+  require("./config/passportConfig")(passport);
+
+  Express()
+    .use(bodyParser.json())
+    .use(bodyParser.urlencoded({ extended: true }))
+    .use(
+      session({
+        secret: "express-auth",
+        resave: true,
+        saveUninitialized: true,
+        cookie: { maxAge: 3600000, sameSite: 'strict' }
+      })
+    )
+    .use(cookieParser("express-auth"))
+    .use(passport.initialize())
+    .use(passport.session())
+
+  this.add('role:auth,cmd:login', (msg, respond) => {
+
+    passport.authenticate("local", (err, user, info) => {
+      if (err) throw err;
+      if (!user) res.json({ status: "error", msg: "No User Exists" });
+      else {
+
+        // req.logIn(user, (err) => {
+        //   if (err) throw err;
+          const token = jwt.sign(
+            { user_id: user._id },
+            process.env.TOKEN_KEY_ACCESS,
+            {
+              expiresIn: "2h",
+            }
+          );
+
+          // save user token
+          msg.session.passport.username = user.username;
+          msg.session.passport.token = token;
+
+          console.log(msg);
+          // res.json({ status: "ok", msg: "Successfully Authenticated", token: token });
+          // console.log(req.logIn);
+          // console.log(req.session);
+      //   });
+      }
+    })();
+
+
   })
-);
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 3600000, sameSite: 'strict' }
-  })
-);
-app.use(cookieParser( process.env.SECRET));
-app.use(passport.initialize());
-app.use(passport.session());
-require("./config/passportConfig")(passport);
 
-//----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
-
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
-
-app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
-const authRouter = require('./routes/auth');
-const profileRouter = require('./routes/profile');
-
-app.use('/auth', authRouter);
-app.use('/profile', profileRouter);
-
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+}

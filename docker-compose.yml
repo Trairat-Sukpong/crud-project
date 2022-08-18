@@ -1,0 +1,10 @@
+version: '2'
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "4000:4000"
+  backend-item:
+    build: ./backend-item
+  backend-profile:
+    build: ./backend-profile

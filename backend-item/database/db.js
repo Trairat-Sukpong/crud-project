@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/lernning-express-app', {
+mongoose.connect('mongodb://localhost:27017/lernning-express-store', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

@@ -1,27 +1,32 @@
 {
-  "name": "express-auth",
-  "version": "0.0.0",
-  "private": true,
+  "name": "backend-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nodemon index.js",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "body-parser": "^1.20.0",
-    "cookie-parser": "~1.4.4",
+    "bluebird": "^3.7.2",
+    "bson": "^4.6.4",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
     "dotenv": "^16.0.1",
-    "express": "~4.16.1",
+    "express": "^4.18.1",
     "express-session": "^1.17.3",
-    "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.0",
-    "morgan": "~1.9.1",
-    "nodemon": "^2.0.19",
+    "moment": "^2.29.3",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.5.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "pug": "2.0.0-beta11",
-    "seneca": "^3.28.2"
+    "seneca": "^3.28.0",
+    "seneca-web": "^2.2.1",
+    "seneca-web-adapter-express": "^1.2.1"
   }
 }
